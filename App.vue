@@ -1,5 +1,9 @@
 <template>
-  <div id="app">
+  <div 
+    id="app"
+    :class="{removeScroll : removeBodyScroll}"
+    :disabled="removeBodyScroll">
+    
     <div class="container">
       <mainWrapper/>
     </div>
@@ -7,6 +11,7 @@
 </template>
 
 <script>
+
 import mainWrapper from './components/Main-Wrapper'
 export default {
   name: 'app',
@@ -17,7 +22,8 @@ export default {
     return {
       msg: 0
     }
-  }
+  },
+  
 }
 </script>
 

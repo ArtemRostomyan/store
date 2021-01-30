@@ -49,7 +49,7 @@ $md4: 479.98;
    border-radius: 6px;
    padding: 10px 15px;
    cursor: pointer;
-   transition: 0.3s;
+   transition: all 0.3s, opacity 0.1s;
    &:hover{
      border: 2px solid #54a78c;
      background-color: #54a78c;

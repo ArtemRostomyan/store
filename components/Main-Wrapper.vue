@@ -1,14 +1,15 @@
 <template>
   <div id="Main-Wrapper">
-    <basketProduct/>
+    <basketProduct
+      :cardData="basket"/>
     <catalogProduct/>
   </div>
 </template>
 
 <script>
 import catalogProduct from './Catalog-product'
-import basketProduct from './Basket-product'
-
+import basketProduct from './Basket'
+import {mapGetters} from 'vuex'
 export default{
   name: 'Main-Wrapper',
   components: {
@@ -20,7 +21,12 @@ export default{
       masg:'pridurok?'
     }
   },
-  methods:{
+  methods: {
+  },
+  computed: {
+    ...mapGetters([
+      'basket'
+    ])
   }
 }
 </script>

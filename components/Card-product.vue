@@ -18,7 +18,8 @@
         </div>
         <div class="catalog-products__button-box">
           <button
-          class="product-card__btn btn">В корзину</button>
+              class="product-card__btn btn"
+              @click="add_in_basket">В корзину</button>
           <img 
             class="product-card__heart"
             src="../assets/heart.svg" 
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+
 export default{
   name: 'Card-product',
   props: {
@@ -47,6 +49,9 @@ export default{
     }
   },
   methods:{
+    add_in_basket(){
+      this.$emit('addInBasket', this.product_data)
+    }
   }
 }
 </script>
@@ -72,16 +77,13 @@ export default{
     width: 160px;
     margin: 0 auto;
     max-height: 205px;
+    cursor: pointer;
   }
   &__name{
     font-size: 19px;
     font-weight: 700;
     color: #000;
     cursor: pointer;
-  }
-  &__btn{
-    
-    
   }
   &__heart{
     box-sizing: content-box;
@@ -92,8 +94,6 @@ export default{
     cursor: pointer;
 
     &:hover{
-      
-      
       background-color: rgba(#54a78c, 0.308);
     }
     &:active{

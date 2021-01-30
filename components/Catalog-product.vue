@@ -12,8 +12,9 @@
         class="catalog-products"
         v-else>
       <cardProduct
-                v-for="product in PRODUCTS" 
+                v-for="product in products" 
                 :key="product.id"
+                @addInBasket="addInBasket"
                 :product_data="product"></cardProduct>
     </div>
     
@@ -36,16 +37,21 @@ export default{
   },
   computed:{
     ...mapGetters([
-      'PRODUCTS'
+      'products'
     ])
   },
   methods:{
     ...mapActions([
-      'GET_PRODUCTS_FROM_GITHUB'
+      'get_products_from_github',
+      'add_in_basket'
+
     ]),
+    addInBasket(data){
+      this.add_in_basket(data)
+    }
   },
   mounted() {
-    this.GET_PRODUCTS_FROM_GITHUB()
+    this.get_products_from_github()
     .then(
       this.preloader = !this.preloader
     )
@@ -56,7 +62,7 @@ export default{
 
 <style lang="scss">
 .catalog-products{
-  margin-top: 50px;
+  margin-top: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

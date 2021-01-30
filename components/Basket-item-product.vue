@@ -18,19 +18,21 @@
       <div 
         class="price-box">
         <button
-          class="btn price-box__button">+</button>
+          class="btn price-box__button"
+          @click="incrementQuantity">+</button>
         <span
           class="price-box__subtext"
-          >1</span>
+          >{{cardItem.quantity}}</span>
         <button
-         class="btn price-box__button">-</button>
+         class="btn price-box__button"
+         @click="decrementQuantity">-</button>
          <p
-          class="price-box__text">{{cardItem.price}} ₽</p>
+          class="price-box__text">{{cardItem.price * cardItem.quantity }}  ₽</p>
       </div>
       <div class="button-box">
         <button
-        class="btn button-box__button"
-        @click="removeItemFromBasket(index)">{{removeItemText}}</button>
+          class="btn button-box__button"
+          @click="removeItemFromBasket">{{removeItemText}}</button>
       </div>  
     </div>
   </div>
@@ -58,8 +60,27 @@ export default{
       console.log(this.cardItem)
     },
     removeItemFromBasket(){
+      this.cardItem.quantity = undefined
       this.$emit('removeItemFromBasket')
+    },
+    incrementQuantity(){
+      if(this.cardItem.quantity < 10){
+        this.cardItem.quantity++
+      }else{
+        alert('Доступно всего 10 товаров одного вида')
+      }
+    },
+    decrementQuantity(){
+      if(this.cardItem.quantity > 1){
+         this.cardItem.quantity--
+      } else{
+        this.removeItemFromBasket()
+        this.cardItem.quantity = undefined
+      }
     }
+  },
+  mounted(){
+    this.$set(this.cardItem, 'quantity', 1)
   }
 }
 </script>
@@ -120,7 +141,7 @@ export default{
       font-weight: 600;
       font-size: 18px;
       border-radius: 3px;
-      padding: 3px 10px;
+      padding: 7px 12px;
       background-color: rgb(219, 27, 27);
       color: #fff;
     }
@@ -130,4 +151,66 @@ export default{
     }
   }
 }
+
+@media(max-width: 880px){
+  .basket-item-box {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 8px 0;
+}
+.image-box {
+
+		// .image-box__image
+
+		&__image {
+      width: 85px;
+		}
+}
+.info-box {
+
+		// .info-box__text
+
+		&__text {
+      font-size: 16px;
+		}
+
+		// .info-box__subtext
+
+		&__subtext {
+		}
+}
+.price-box {
+
+		// .price-box__button
+
+		&__button {
+		}
+
+		// .price-box__subtext
+
+		&__subtext {
+      font-size: 13px;
+		}
+
+		// .price-box__text
+
+		&__text {
+		}
+}
+.btn {
+}
+.button-box {
+
+		// .button-box__button
+
+		&__button {
+      font-size: 15px;
+      padding: 7px 25px;
+		}
+}
+
+}
+
+
+
 </style>

@@ -16,14 +16,22 @@ let store = new Vuex.Store({
          state.server = server;
       },
       set_card: (state, product) => {
-         state.basket.push(product),
-         state.basket_length = state.basket.length
+         if(!product.quantity){
+            state.basket.push(product),
+            state.basket_length = state.basket.length
+         } else if(product.quantity < 10){
+            product.quantity++
+         } else{
+            alert('Доступно всего 10 товаров одного вида')
+         }
+         
       },
       toggleBasketVisibility: (state) =>{
          state.basketVisibility = !state.basketVisibility
       },
-      removeItemFromBasket: (state, index) => {
+      deleteItemFromBasket: (state, index) => {
          state.basket.splice(index, 1)
+         state.basket_length = state.basket.length
       }
    },
    actions: {
@@ -45,8 +53,8 @@ let store = new Vuex.Store({
       toggleBasketVisibility({commit}){
          commit('toggleBasketVisibility')
       },
-      removeItemFromBasket({commit}, index){
-         commit('removeItemFromBasket', index)
+      deleteItemFromBasket({commit}, index ){
+         commit('deleteItemFromBasket', index )
       }
    },
    getters: {

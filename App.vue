@@ -1,10 +1,7 @@
 <template>
   <div 
-    id="app"
-    :class="{removeScroll : removeBodyScroll}"
-    :disabled="removeBodyScroll">
-    
-    <div class="container">
+    id="app">  
+   <div class="container">
       <mainWrapper/>
     </div>
   </div>

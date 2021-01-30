@@ -16,24 +16,27 @@
             class="quanity-box__text">{{basket_length}}</span>
         </div>
       </div>
-    <div 
-      class="products-box basket-box__products-box"
-      v-if="basketVisibility">
-      <basketItemProduct
-        class="products-box__item"
-        v-for="(card, index) in cardData"
-        :key="index"
-        :cardItem="card"
-        @removeItemFromBasket="removeItemFromBasket(index)"
-        />
-    </div>
+      <transition name="slide-fade">
+        <div 
+          class="products-box basket-box__products-box"
+          v-show="basketVisibility">
+          <h2
+            class="products-box__text" v-if="basket_length == 0">Корзина пуста</h2>
+              <basketItemProduct
+                class="products-box__item"
+                v-for="(card, index) in cardData"
+                :key="card.id"
+                :cardItem="card"
+                @removeItemFromBasket="removeItemFromBasket(index)"
+              />
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import basketItemProduct from './Basket-item-product'
 
 export default{
@@ -58,10 +61,10 @@ export default{
   methods:{
     ...mapActions([
       'toggleBasketVisibility',
-      'removeItemFromBasket'
+      'deleteItemFromBasket'
     ]),
     removeItemFromBasket(index){
-      this.removeItemFromBasket()
+      this.deleteItemFromBasket(index)
     }
   },
   computed: {
@@ -73,7 +76,7 @@ export default{
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #Basket-product{
   left: 0;
   top: 0;
@@ -108,6 +111,9 @@ export default{
   background-color: #3a6154;
   box-shadow: 0px 0px 5px 1px #000;
   overflow-y: scroll;
+  &__text{
+    color: #fff;
+  }
 }
 .image-box{
   cursor: pointer;
@@ -137,6 +143,36 @@ export default{
   height: 19px;
   &__text{
     font-size: 13px;
+  }
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to{
+  transform: translateX(10px);
+  opacity: 0;
+}
+@media(min-height: 736px){
+  .products-box{
+    height: 560px;
+  }
+  .basket-box{
+    &__products-box{
+      bottom: -545px;
+    }
+  }
+}
+@media(max-width: 880px){
+  .products-box{
+    width: 100%;
+  }
+  .basket-box{
+    &__products-box{
+      right: 0px;
+    }
   }
 }
 </style>

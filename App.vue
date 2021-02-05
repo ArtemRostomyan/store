@@ -9,7 +9,7 @@
 
 <script>
 
-import mainWrapper from './components/Main-Wrapper'
+import mainWrapper from './components/v-main-wrapper'
 export default {
   name: 'app',
   components:{

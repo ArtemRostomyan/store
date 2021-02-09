@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+import sortPriceAndCategories from './jsFunctions/sortPriceAndCategories'
+
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
@@ -22,7 +24,10 @@ let store = new Vuex.Store({
          {name: 'motherboard', value: 'материнская плата'},
          {name: 'graphics-card', value: 'видеокарта'},
        ],
-      newCatalog: []
+      newCatalog: [],
+      MINPRICE: 0,
+      MAXPRICE: 300000,
+      DONTRESULT: 0
    },
    mutations: {
       set_product_to_state: (state, server) => {
@@ -74,8 +79,15 @@ let store = new Vuex.Store({
       },
       updateValue (state, value) {
          state.value = value
-         state.newCatalog = []
-         if(state.value.length){
+         sortPriceAndCategories(state)
+       },
+       startProcess( state ){
+          state.newCatalog = []
+          state.newCatalog = [...state.server]
+          state.newCatalog = state.newCatalog.filter(item =>{
+             return item.price >= state.MINPRICE && item.price <= state.MAXPRICE
+          })
+          if(state.value.length){
             state.value.forEach(itemValue =>{
                itemValue.name === state.server.filter(itemProducts => {
                   if(itemProducts.type == itemValue.name){
@@ -83,7 +95,28 @@ let store = new Vuex.Store({
                   }
                })
             })
-         }
+          }
+       },
+      SET_RANGE_MAX_SLIDERS(state, maxPrice, minPrice){
+         state.MAXPRICE = maxPrice
+        console.log(minPrice)
+         sortPriceAndCategories(state)
+      },
+      SET_RANGE_MIN_SLIDERS(state, minPrice, maxPrice){
+         
+         state.MINPRICE = minPrice
+         console.log(maxPrice)
+         sortPriceAndCategories(state)
+       },
+       INCREMENT_DONT_RESULT(state){
+          if(state.DONTRESULT >= 3){
+            state.value = []
+            alert('поиск не дал результатов')
+          }
+          state.DONTRESULT++
+       },
+       updateMessage (state, minPrice) {
+         state.MINPRICE = minPrice
        }
    },
    actions: {
@@ -122,7 +155,22 @@ let store = new Vuex.Store({
       },
       updateValueAction ({ commit }, value) {
          commit('updateValue', value)
-       }
+       },
+       startProcess({commit}){
+         commit('startProcess')
+      },
+      SET_RANGE_MIN_SLIDERS({commit}, minPrice, maxPrice){
+         commit('SET_RANGE_MIN_SLIDERS', minPrice, maxPrice)
+      },
+      SET_RANGE_MAX_SLIDERS({commit}, maxPrice, minPrice){
+         commit('SET_RANGE_MAX_SLIDERS', maxPrice, minPrice)
+      },
+      INCREMENT_DONT_RESULT({commit}){
+         commit('INCREMENT_DONT_RESULT')
+      },
+      updateMessage({commit}, minPrice){
+         commit('updateMessage', minPrice)
+      }
    },
    getters: {
       PRODUCTS(states){
@@ -176,6 +224,9 @@ let store = new Vuex.Store({
       },
       newCatalog(states){
          return states.newCatalog
+      },
+      DONTRESULT(states){
+         return states.DONTRESULT
       }
    }
 });

@@ -1,31 +1,30 @@
 <template>
   <div id="Catalog-product">
-    
-    <vhedaerComponent
+    <vHedaerComponent
       :cardData="basket"/>
-    <vpreloaderComponent
+    <vPreloaderComponent
       v-if="preloader"
       class="preloader-comp"/>
-    <vmultiSelect
-      class="vmultiSelect"
-      @createNewCatalog="createNewCatalog"
-      v-if="!preloader"
-      />
-
-      <transition-group 
-        name="list" 
-        tag="div"
-        class="catalog-products"
-        v-if="!preloader">
-        <vcardProduct
-                  v-for="product in filteredCatalog" 
-                  :key="product.id"
-                  @addInBasket="addInBasket"
-                  :product_data="product"
-                  ></vcardProduct>
-      </transition-group>
-
-    <vohNoComponent
+    <div class="iput-box">
+      <vMultiSelect
+        class="vMultiSelect"
+        v-if="!preloader"
+        />
+      <vRangeSortingPrice/>
+    </div>
+    <transition-group 
+      name="list" 
+      tag="div"
+      class="catalog-products"
+      v-if="!preloader">
+      <vCardProduct
+                v-for="product in filteredCatalog" 
+                :key="product.id"
+                @addInBasket="addInBasket"
+                :product_data="product"
+                ></vCardProduct>
+    </transition-group>
+    <vOhNoComponent
       v-if="ohNo"/>
   </div>
 </template>
@@ -35,20 +34,22 @@
 
 import {mapActions, mapGetters} from 'vuex'
 
-import vhedaerComponent from '../header-basket/v-header'
-import vcardProduct from '../catalog/v-card-product'
-import vpreloaderComponent from '../other/v-preloader'
-import vohNoComponent from '../other/v-oh-no-component'
-import vmultiSelect from '../multi-select/v-multi-select'
+import vHedaerComponent from '../header-basket/v-header'
+import vCardProduct from '../catalog/v-card-product'
+import vPreloaderComponent from '../other/v-preloader'
+import vOhNoComponent from '../other/v-oh-no-component'
+import vMultiSelect from '../catalog/multi-select/v-multi-select'
+import vRangeSortingPrice from '../catalog/range-input/v-range-sorting-price'
 
 export default{
   name: 'Catalog-product',
   components: {
-    vcardProduct,
-    vpreloaderComponent,
-    vhedaerComponent,
-    vohNoComponent,
-    vmultiSelect
+    vCardProduct,
+    vPreloaderComponent,
+    vHedaerComponent,
+    vOhNoComponent,
+    vMultiSelect,
+    vRangeSortingPrice
   },
   data(){
     return{
@@ -60,13 +61,15 @@ export default{
       'preloader',
       'basket',
       'ohNo',
-      'newCatalog'
+      'newCatalog',
+      'DONTRESULT'
     ]),
     filteredCatalog(){
       if(this.newCatalog.length){
         return this.newCatalog
       } else{
-        return this.PRODUCTS
+          this.INCREMENT_DONT_RESULT()
+          return this.PRODUCTS
       }
     }
   },
@@ -74,19 +77,25 @@ export default{
     ...mapActions([
       'get_products_from_github',
       'add_in_basket',
-      'togglePreloader'
+      'togglePreloader',
+      'startProcess',
+      'INCREMENT_DONT_RESULT'
     ]),
     addInBasket(data){
       this.add_in_basket(data)
     },
-    createNewCatalog(){
-      
-    }
+
   },
   mounted() {
     this.get_products_from_github()
     .then(
       this.togglePreloader()
+    )
+    .then(
+      this.startProcess()
+    )
+    .then(
+      this.INCREMENT_DONT_RESULT()
     )
   }
   
@@ -105,7 +114,9 @@ export default{
 .preloader-comp{
   margin-top: 25%;
 }
-.vmultiSelect{
-  margin: 100px 0 0 35px;
+.iput-box{
+  margin: 100px 0 0 0;
+  display: flex;
+  justify-content: space-around;
 }
 </style>

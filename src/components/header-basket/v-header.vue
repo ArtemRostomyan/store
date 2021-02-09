@@ -63,7 +63,7 @@ export default{
 #Header{
   left: 0;
   top: 0;
-  z-index: 2;
+  z-index: 3;
   border-radius: 0px 0px 10px 10px;
   background-color: #54a78c;
   height: 75px;

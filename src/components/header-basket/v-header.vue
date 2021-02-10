@@ -2,6 +2,15 @@
   <div id="Header">
     <div class="header-box"
       >
+      <router-link
+        :to="{name: 'catalog'}"
+       >
+        <img 
+          class="header-box__image"
+          src="../../assets/house.png" 
+          alt="home">
+      </router-link>   
+      
       <div 
         class="image-box header-box__image-box"
         @click="toggleBasketVisibility"
@@ -18,7 +27,7 @@
         </div>
       </div>
         <vbasket
-          :cardData="cardData"/>
+          :product_data="product_data"/>
     </div>
   </div>
 </template>
@@ -31,7 +40,7 @@ import vbasket from './v-basket'
 
 export default{
   props: {
-    cardData: {
+    product_data: {
         type: Array,
         default(){
           return []
@@ -49,7 +58,10 @@ export default{
   methods:{
     ...mapActions([
       'toggleBasketVisibility'
-    ])
+    ]),
+    assss(){
+      console.log(this.product_data)
+    }
   },
   computed: {
     ...mapGetters([
@@ -84,7 +96,21 @@ export default{
     right: 20px;
     bottom: -380px;
   }
+  &__image{
+    border: 3px solid #fff;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 25%;
+    width: 35px;
+    &:active{
+      width: 33px;
+    }
+  }
 }
+
 .products-box{
   width: 90%;
   height: 400px;

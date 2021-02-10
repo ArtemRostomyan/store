@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import sortPriceAndCategories from './jsFunctions/sortPriceAndCategories'
 
+
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
@@ -97,15 +98,12 @@ let store = new Vuex.Store({
             })
           }
        },
-      SET_RANGE_MAX_SLIDERS(state, maxPrice, minPrice){
+      SET_RANGE_MAX_SLIDERS(state, maxPrice){
          state.MAXPRICE = maxPrice
-        console.log(minPrice)
          sortPriceAndCategories(state)
       },
-      SET_RANGE_MIN_SLIDERS(state, minPrice, maxPrice){
-         
+      SET_RANGE_MIN_SLIDERS(state, minPrice){
          state.MINPRICE = minPrice
-         console.log(maxPrice)
          sortPriceAndCategories(state)
        },
        INCREMENT_DONT_RESULT(state){
@@ -159,11 +157,11 @@ let store = new Vuex.Store({
        startProcess({commit}){
          commit('startProcess')
       },
-      SET_RANGE_MIN_SLIDERS({commit}, minPrice, maxPrice){
-         commit('SET_RANGE_MIN_SLIDERS', minPrice, maxPrice)
+      SET_RANGE_MIN_SLIDERS({commit}, minPrice ){
+         commit('SET_RANGE_MIN_SLIDERS', minPrice)
       },
-      SET_RANGE_MAX_SLIDERS({commit}, maxPrice, minPrice){
-         commit('SET_RANGE_MAX_SLIDERS', maxPrice, minPrice)
+      SET_RANGE_MAX_SLIDERS({commit}, maxPrice){
+         commit('SET_RANGE_MAX_SLIDERS', maxPrice)
       },
       INCREMENT_DONT_RESULT({commit}){
          commit('INCREMENT_DONT_RESULT')

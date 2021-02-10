@@ -1,7 +1,7 @@
 <template>
   <div id="Catalog-product">
     <vHedaerComponent
-      :cardData="basket"/>
+      :product_data="basket"/>
     <vPreloaderComponent
       v-if="preloader"
       class="preloader-comp"/>
@@ -10,7 +10,9 @@
         class="vMultiSelect"
         v-if="!preloader"
         />
-      <vRangeSortingPrice/>
+      <vRangeSortingPrice
+        class="vRangeSortingPrice"
+        v-if="!preloader"/>
     </div>
     <transition-group 
       name="list" 
@@ -20,8 +22,9 @@
       <vCardProduct
                 v-for="product in filteredCatalog" 
                 :key="product.id"
-                @addInBasket="addInBasket"
                 :product_data="product"
+                @addInBasket="addInBasket"
+                @updateSeparateCardProduct="updateSeparateCardProduct(product)"
                 ></vCardProduct>
     </transition-group>
     <vOhNoComponent
@@ -68,7 +71,6 @@ export default{
       if(this.newCatalog.length){
         return this.newCatalog
       } else{
-          this.INCREMENT_DONT_RESULT()
           return this.PRODUCTS
       }
     }
@@ -84,7 +86,9 @@ export default{
     addInBasket(data){
       this.add_in_basket(data)
     },
-
+    updateSeparateCardProduct(product){
+      this.$router.push( {name: 'separate-product', query: {'product': product.id}, params:{product_data: product} })
+    }
   },
   mounted() {
     this.get_products_from_github()
@@ -118,5 +122,17 @@ export default{
   margin: 100px 0 0 0;
   display: flex;
   justify-content: space-around;
+}
+@media(max-width: 560px){
+  .iput-box{
+    margin: 0px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .vRangeSortingPrice{
+    margin: 100px 0 20px 0;
+  }
 }
 </style>

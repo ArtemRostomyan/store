@@ -36,6 +36,7 @@ export default{
 
 <style lang="scss">
 .OhNoComponent{
+  z-index: 20;
   position: fixed;
   width: 50%;
   left: 50%;

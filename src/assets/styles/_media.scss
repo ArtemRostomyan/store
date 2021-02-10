@@ -10,11 +10,6 @@
       }
       
    }
-   .catalog-products{
-      &__product-card{
-         margin: 10px 15px;
-      }
-   }
  }
  @media(max-width: 480px){
    .btn{
@@ -27,7 +22,7 @@
    }
    .product-card{
       height: 255px;
-      width: 130px;
+      width: 125px;
       &__image{
          width: 100px;
       }
@@ -40,11 +35,6 @@
       }
       &__price{
          font-size: 15px;
-      }
-   }
-   .catalog-products{
-      &__product-card{
-         margin: 10px;
       }
    }
  }
@@ -74,11 +64,6 @@
         }
         &__price{
            font-size: 15px;
-        }
-     }
-     .catalog-products{
-        &__product-card{
-           margin: 10px;
         }
      }
 }

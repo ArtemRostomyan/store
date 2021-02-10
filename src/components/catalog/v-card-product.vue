@@ -1,17 +1,20 @@
 <template>
-  <div id="Card-product">
-    
+  <div id="Card-product" >
     <div 
         class="product-card catalog-products__product-card"
         :title="product_data.description">
         <div class="catalog-products__image-box">
           <img 
           class="product-card__image"
+          @click="updateSeparateCardProduct"
           :src="product_data.image"
           alt=""
           >
         </div>
-        <div class="catalog-products__info-box">
+        <div 
+          class="catalog-products__info-box"
+          @click="updateSeparateCardProduct"
+          >
           <p
             class="product-card__name">{{product_data.name}}</p>
           <p
@@ -52,6 +55,9 @@ export default{
   methods:{
     add_in_basket(){
       this.$emit('addInBasket', this.product_data)
+    },
+    updateSeparateCardProduct(){
+      this.$emit('updateSeparateCardProduct')
     }
   }
 }
@@ -93,7 +99,6 @@ export default{
     bottom: 16px;
     width: 30px;
     cursor: pointer;
-
     &:hover{
       background-color: rgba(#54a78c, 0.308);
     }

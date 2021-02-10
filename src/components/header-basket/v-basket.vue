@@ -20,7 +20,7 @@
           
               <vbasketItemProduct
                 class="products-box__item"
-                v-for="(card, index) in cardData"
+                v-for="(card, index) in product_data"
                 :key="card.id"
                 :cardItem="card"
                 @removeItemFromBasket="removeItemFromBasket(index)"
@@ -36,7 +36,7 @@ import vbasketItemProduct from './v-basket-item-product'
 export default{
   name: 'Basket',
   props:{
-    cardData: {
+    product_data: {
         type: Array,
         default(){
           return []
@@ -94,6 +94,18 @@ export default{
     color: rgb(255, 255, 255);
     font-size: 19px;
     font-weight: 600;
+  }
+}
+@media(max-width: 680px){
+  .btn-box{
+    margin-bottom: 5px;
+    &__text{
+      font-size: 12px;
+    }
+    &__btn{
+      padding: 5px 7px;
+      font-size: 12px;
+    }
   }
 }
 @media(max-width: 480px){

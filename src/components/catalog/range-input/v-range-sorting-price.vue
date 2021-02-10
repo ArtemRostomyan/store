@@ -8,7 +8,7 @@
         max="300000"
         step="1000"
         v-model.number="maxPrice"
-        @change="setRangeMaxSliders(maxPrice, minPrice)"
+        @change="setRangeMaxSliders(maxPrice)"
       >
       <input 
         class="inputs__input"
@@ -17,21 +17,22 @@
         max="300000"
         step="1000"
         v-model.number="minPrice"
-        @change="setRangeMinSliders(minPrice, maxPrice)"
+        @change="setRangeMinSliders(minPrice)"
         >
+        <img src="" alt="">
     </div> 
     <div class="input-subtext">
       <input 
         class="input-subtext__input"
         type="number"
         v-model.number="minPrice"
-        @keyup="setRangeMinSliders(minPrice, maxPrice)"
+        @keyup="setRangeMinSliders(minPrice)"
         >
       <input 
         class="input-subtext__input"
         type="number"
         v-model.number="maxPrice"
-        @keyup="setRangeMaxSliders(maxPrice, minPrice)"
+        @keyup="setRangeMaxSliders(maxPrice)"
         >
     </div>
   </div>
@@ -52,25 +53,50 @@ export default{
       'SET_RANGE_MAX_SLIDERS',
       'SET_RANGE_MIN_SLIDERS'
     ]),
-    setRangeMaxSliders(maxPrice, minPrice){
-        if(this.minPrice > this.maxPrice){
-          let i = this.maxPrice
-          this.maxPrice  = this.minPrice
-          this.minPrice = i
-          return this.SET_RANGE_MAX_SLIDERS(maxPrice, minPrice)
-        } else{
-          return this.SET_RANGE_MAX_SLIDERS(maxPrice, minPrice)
-        }
-    },
-    setRangeMinSliders(minPrice, maxPrice){
-         if(this.minPrice > this.maxPrice){
+  
+    setRangeMaxSliders(maxPrice){
+      setTimeout(() => {
+        if(this.maxPrice == ''){
+          this.maxPrice = 300000
+          this.SET_RANGE_MIN_SLIDERS(this.minPrice)
+          return this.SET_RANGE_MAX_SLIDERS(maxPrice)
+        } else if(this.minPrice > this.maxPrice){
             let i = this.maxPrice
-            this.maxPrice  = this.minPrice
+            this.maxPrice = this.minPrice
             this.minPrice = i
-            return this.SET_RANGE_MIN_SLIDERS(minPrice, maxPrice)
+            this.SET_RANGE_MIN_SLIDERS(this.minPrice)
+            return this.SET_RANGE_MAX_SLIDERS(maxPrice)
+          } else{
+            this.SET_RANGE_MIN_SLIDERS(this.minPrice)
+            return this.SET_RANGE_MAX_SLIDERS(maxPrice)
+        }
+      }, 300)
+    },
+    setRangeMinSliders(minPrice){
+      setTimeout(() =>{
+        if(this.minPrice == ''){
+          this.minPrice = 0
+          this.SET_RANGE_MAX_SLIDERS(this.maxPrice)
+          return this.SET_RANGE_MIN_SLIDERS(minPrice)
+        } else if(this.minPrice > this.maxPrice){
+            if(this.minPrice > 300000){
+              this.minPrice = 0
+              this.maxPrice = 300000
+              this.SET_RANGE_MAX_SLIDERS(this.maxPrice)
+              return this.SET_RANGE_MIN_SLIDERS(minPrice)
+            } else{
+              let i = this.maxPrice
+              this.maxPrice  = this.minPrice
+              this.minPrice = i
+              this.SET_RANGE_MAX_SLIDERS(this.maxPrice)
+              return this.SET_RANGE_MIN_SLIDERS(minPrice)
+            }
+            
          } else{
-            return this.SET_RANGE_MIN_SLIDERS(minPrice, maxPrice)
+            this.SET_RANGE_MAX_SLIDERS(this.maxPrice)
+            return this.SET_RANGE_MIN_SLIDERS(minPrice)
          } 
+      }, 600)
     }
   },
   computed: {

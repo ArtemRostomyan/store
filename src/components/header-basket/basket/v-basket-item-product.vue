@@ -1,49 +1,47 @@
 <template>
-  <div 
-    id="SeparateBasketItemProduct"
-    class="basket-item-box">
-    <div class="image-box">
-      <img 
-        class="image-box__image"
-        :src="cardItem.image" 
-        @click="updateSeparateCardProduct"
-        alt="">
+  <div id="Basket-item-product">
+    <div class="basket-item-box">
+      <div 
+        class="image-box">
+        <img 
+          class="image-box__image"
+          :src="cardItem.image" 
+          alt="">
+      </div>
+      <div
+        class="info-box">
+          <p 
+            class="info-box__text">{{cardItem.name}}</p>
+          <p
+            class="info-box__subtext">{{cardItem.description}}</p>
+      </div>
+      <div 
+        class="price-box">
+        <button
+          class="btn price-box__button"
+          @click="incrementQuantity">+</button>
+        <span
+          class="price-box__subtext"
+          >{{cardItem.quantity}}</span>
+        <button
+         class="btn price-box__button"
+         @click="decrementQuantity">-</button>
+         <p
+          class="price-box__text">{{(cardItem.price * cardItem.quantity).toLocaleString()}}  ₽</p>
+      </div>
+      <div class="button-box">
+        <button
+          class="btn button-box__button"
+          @click="removeItemFromBasket">{{removeItemText}}</button>
+      </div>  
     </div>
-    <div
-      class="info-box"
-      @click="updateSeparateCardProduct">
-        <p 
-          class="info-box__text">{{cardItem.name}}</p>
-        <p
-          class="info-box__subtext">{{cardItem.description}}</p>
-    </div>
-    <div 
-      class="price-box">
-      <button
-        class="btn price-box__button"
-        @click="incrementQuantity">+</button>
-      <span
-        class="price-box__subtext"
-        >{{cardItem.quantity}}</span>
-      <button
-        class="btn price-box__button"
-        @click="decrementQuantity">-</button>
-      <p
-        class="price-box__text">{{(cardItem.price * cardItem.quantity).toLocaleString()}}  ₽</p>
-    </div>
-    <div class="button-box">
-      <button
-        class="btn button-box__button"
-        @click="removeItemFromBasket">{{removeItemText}}</button>
-    </div> 
   </div>
 </template>
 
-<script> 
+<script>
 import {mapGetters} from 'vuex'
 
 export default{
-  name: 'SeparateBasketItemProduct',
   props: {
     cardItem: {
       type: Object,
@@ -52,10 +50,16 @@ export default{
       }
     }
   },
+  name: 'Basket-item-product',
   data(){
-    return{}
+    return{
+    }
   },
   methods:{
+    removeItemFromBasket(){
+      this.cardItem.quantity = undefined
+      this.$emit('removeItemFromBasket')
+    },
     incrementQuantity(){
       if(this.cardItem.quantity < 10){
         this.cardItem.quantity++
@@ -71,46 +75,38 @@ export default{
         this.cardItem.quantity = undefined
       }
     },
-    removeItemFromBasket(){
-      this.cardItem.quantity = undefined
-      this.$emit('removeItemFromBasket')
-    },
-    updateSeparateCardProduct(){
-      this.$emit('updateSeparateCardProduct')
-    }
   },
   computed: {
     ...mapGetters([
       'removeItemText'
     ])
+  },
+  mounted(){
+    this.$set(this.cardItem, 'quantity', 1)
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .basket-item-box{
-  display: flex;
-  justify-content: space-between;
-}
-.basket-item-box{
-  padding: 5px;
+  padding: 5px  15px;
   background-color: #fff;
-  margin: 0px 0px 12px 0px;
+  margin: 0px 0px 4px 0px;
   border-radius: 7px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  &:last-child{
-    margin-bottom: 0px;
-  }
+  
 }
 .image-box{
   &__image{
-    width: 100px;
-  }
-  &:active{
+    cursor: default;
     transform: none;
+    width: 100px;
+    &:active,
+     :focus{
+      transform: none;
+  }
   }
 }
 .info-box{
@@ -171,22 +167,33 @@ export default{
     display: flex;
     flex-direction: column;
     margin: 0 0 8px 0;
-  }
-  .image-box {
-      &__image {
-        width: 85px;
-      }
-  }
-  .info-box {
-
-      &__text {
-        font-size: 16px;
-      }
-  }
-  .price-box {
-      &__subtext {
-        font-size: 13px;
-      }
-  }
 }
+.image-box {
+		&__image {
+      width: 85px;
+		}
+}
+.info-box {
+
+		&__text {
+      font-size: 16px;
+		}
+}
+.price-box {
+		&__subtext {
+      font-size: 13px;
+		}
+}
+
+.button-box {
+		&__button {
+      font-size: 15px;
+      padding: 7px 25px;
+		}
+}
+
+}
+
+
+
 </style>

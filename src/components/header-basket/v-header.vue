@@ -9,7 +9,14 @@
           class="header-box__image"
           src="../../assets/house.png" 
           alt="home">
-      </router-link>   
+      </router-link> 
+      <router-link
+        :to="{name: 'heart'}">
+        <img
+          class="favorite__heart"
+          src="../../assets/heart.png" 
+          alt="">
+      </router-link>  
       
       <div 
         class="image-box header-box__image-box"
@@ -34,8 +41,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
-import vbasket from './v-basket'
-
+import vbasket from './basket/v-basket'
 
 
 export default{
@@ -103,7 +109,8 @@ export default{
     border-radius: 50%;
     position: absolute;
     left: 20px;
-    top: 25%;
+    top: 50%;
+    transform: translate(0, -50%);
     width: 35px;
     &:active{
       width: 33px;
@@ -158,7 +165,21 @@ export default{
     font-size: 13px;
   }
 }
-
+.favorite{
+  &__heart{
+    cursor: pointer;
+    width: 32px;
+    margin: 0 12px 0 0;
+    box-shadow: 0 0 5px #fff;
+    &:hover{
+      padding: 4px;
+      border-radius: 40%;
+    }
+    &:active{
+      width: 30px;
+    }
+  }
+}
 @media(min-height: 736px){
   .products-box{
     height: 560px;

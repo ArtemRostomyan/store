@@ -25,7 +25,9 @@
               class="product-card__btn btn"
               @click="add_in_basket">В корзину</button>
           <img 
-            class="product-card__heart"
+            class="heart-img"
+            :class="{'favorite' : product_data.favorite}"
+            @click="toggleFavorite"
             src="../../assets/heart.svg" 
             alt=""
             >
@@ -35,7 +37,7 @@
 </template>
 
 <script>
-
+import {mapActions} from 'vuex'
 export default{
   name: 'Card-product',
   props: {
@@ -53,12 +55,21 @@ export default{
     }
   },
   methods:{
+    ...mapActions([
+      'TOGGLEFAVORITE'
+    ]),
     add_in_basket(){
       this.$emit('addInBasket', this.product_data)
     },
     updateSeparateCardProduct(){
       this.$emit('updateSeparateCardProduct')
+    },
+    toggleFavorite(){
+      this.$emit('toggleFavorite', this.product_data)
     }
+  },
+  mounted(){
+      this.$set(this.product_data, 'favorite', false)
   }
 }
 </script>
@@ -92,7 +103,11 @@ export default{
     color: #000;
     cursor: pointer;
   }
-  &__heart{
+  &__price{
+    color: #000;
+  }
+}
+.heart-img{
     box-sizing: content-box;
     padding: 3px;
     border-radius: 40%;
@@ -108,7 +123,6 @@ export default{
       left: 152px;
     }
   }
-}
 .catalog-products{
   &__image-box{
     display: flex;
@@ -120,5 +134,18 @@ export default{
     justify-content: space-between;
   }
 }
-
+@media (max-width: 480px) {
+  .product-card{
+    &__name{
+      font-size: 17px;
+    }
+  }
+}
+.favorite{
+  background-color: red;
+  border-radius: 30%;
+  &:hover{
+    background-color: rgba(255, 0, 0, 0.925);
+  }
+}
 </style>

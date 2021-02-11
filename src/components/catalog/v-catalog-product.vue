@@ -23,6 +23,7 @@
                 v-for="product in filteredCatalog" 
                 :key="product.id"
                 :product_data="product"
+                @toggleFavorite="toggleFavorite(product)"
                 @addInBasket="addInBasket"
                 @updateSeparateCardProduct="updateSeparateCardProduct(product)"
                 ></vCardProduct>
@@ -43,6 +44,8 @@ import vPreloaderComponent from '../other/v-preloader'
 import vOhNoComponent from '../other/v-oh-no-component'
 import vMultiSelect from '../catalog/multi-select/v-multi-select'
 import vRangeSortingPrice from '../catalog/range-input/v-range-sorting-price'
+
+
 
 export default{
   name: 'Catalog-product',
@@ -81,13 +84,32 @@ export default{
       'add_in_basket',
       'togglePreloader',
       'startProcess',
-      'INCREMENT_DONT_RESULT'
+      'INCREMENT_DONT_RESULT',
+      'TOGGLEFAVORITE'
     ]),
-    addInBasket(data){
-      this.add_in_basket(data)
+    addInBasket(product){
+      console.log(this.PRODUCTS)
+      this.add_in_basket(product)
     },
     updateSeparateCardProduct(product){
       this.$router.push( {name: 'separate-product', query: {'product': product.id}, params:{product_data: product} })
+    },
+    toggleFavorite(product){
+      product.favorite = !product.favorite
+      this.TOGGLEFAVORITE(product)
+    },
+    getInfoForLocalStorage(){
+      if(localStorage.favorites){
+        this.PRODUCTS.forEach(itemProduct => {
+          JSON.parse(localStorage.favorites).forEach(item =>{
+            console.log(item)
+            if(item.id === itemProduct.id){
+              itemProduct.favorite = true
+              this.TOGGLEFAVORITE(itemProduct)
+            }
+          })
+        })
+      }
     }
   },
   mounted() {
@@ -101,8 +123,10 @@ export default{
     .then(
       this.INCREMENT_DONT_RESULT()
     )
+  },
+  beforeUpdate(){
+    this.getInfoForLocalStorage()
   }
-  
 }
 </script>
 

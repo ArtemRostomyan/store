@@ -11,6 +11,8 @@ let store = new Vuex.Store({
    state: {
       server: [],
       basket: [],
+      newCatalog: [],
+      favorites: [],
       basket_length: 0,
       basketVisibility: false,
       quantity: 1,
@@ -25,7 +27,6 @@ let store = new Vuex.Store({
          {name: 'motherboard', value: 'материнская плата'},
          {name: 'graphics-card', value: 'видеокарта'},
        ],
-      newCatalog: [],
       MINPRICE: 0,
       MAXPRICE: 300000,
       DONTRESULT: 0
@@ -67,7 +68,6 @@ let store = new Vuex.Store({
          if(product.quantity < 10){
             state.quantity++
             product.quantity++
-            console.log(`state.quantity: ${state.quantity} product.quantity: ${product.quantity}`)
           }else{
             alert('Доступно всего 10 товаров одного вида')
           }
@@ -115,6 +115,19 @@ let store = new Vuex.Store({
        },
        updateMessage (state, minPrice) {
          state.MINPRICE = minPrice
+       },
+       TOGGLEFAVORITE(state, product){
+         if(product.favorite){
+            state.favorites.push(product)
+            localStorage.favorites = JSON.stringify(state.favorites)
+         } else{
+            state.favorites.forEach((item, index) => {
+               if(item.id === product.id){
+                  state.favorites.splice(index, 1)
+               }
+            })
+            localStorage.favorites = JSON.stringify(state.favorites)
+         }
        }
    },
    actions: {
@@ -128,6 +141,7 @@ let store = new Vuex.Store({
         })
         .catch(() => {
            alert( 'ошибка')
+           return Error
         })
       },
       add_in_basket({commit}, product){
@@ -168,6 +182,9 @@ let store = new Vuex.Store({
       },
       updateMessage({commit}, minPrice){
          commit('updateMessage', minPrice)
+      },
+      TOGGLEFAVORITE({commit}, product){
+         commit('TOGGLEFAVORITE', product)
       }
    },
    getters: {
@@ -225,6 +242,9 @@ let store = new Vuex.Store({
       },
       DONTRESULT(states){
          return states.DONTRESULT
+      },
+      FAVORITES(states){
+         return states.favorites
       }
    }
 });

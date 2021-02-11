@@ -7,6 +7,7 @@
       </div> 
         <vseparateBasketItemProduct
                 v-show="queueView == 1"
+                @updateSeparateCardProduct="updateSeparateCardProduct(card)"
                 @removeItemFromBasket="removeItemFromBasket(index)"
                 v-for="(card, index) in basket"
                 :key="card.id"
@@ -40,7 +41,6 @@
         v-if="queueView == 1"
         class="btn-box__btn separate-basket__btn"
         @click="queueNext">Далее</button>
-      
     </div>
     <vohNoComponent
       v-if="ohNo"/>
@@ -80,7 +80,8 @@ export default{
   },
   methods:{
     ...mapActions([
-      'deleteItemFromBasket'
+      'deleteItemFromBasket',
+      'toggleBasketVisibility'
     ]),
     removeItemFromBasket(index){
       this.deleteItemFromBasket(index)
@@ -94,6 +95,10 @@ export default{
       if(this.queueView > 1){
         this.queueView--
       }
+    },
+    updateSeparateCardProduct(card){
+      this.toggleBasketVisibility()
+      this.$router.push({name: 'separate-product'  ,query: {'card' : card.id}, params:{product_data: card}})
     }
   },
   computed: {

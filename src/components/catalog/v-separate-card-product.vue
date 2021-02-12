@@ -1,7 +1,7 @@
 <template>
   <div id="v-separate-card-product">
     <vHedaerComponent
-      :product_data="basket"/>
+      :product_data="BASKET"/>
     <div 
       class="separate-product"
       :title="product_data.description">
@@ -41,9 +41,11 @@
           <div class="button-box">
             <button
                 class="separate-product__btn btn"
-                @click="add_in_basket(product_data)">В корзину</button>
+                @click="ADD_IN_BASKET(product_data)">В корзину</button>
             <img 
               class="separate-product__heart"
+              :class="{'favorite' : product_data.favorite}"
+              @click="toggleFavorite"
               src="../../assets/heart.svg" 
               alt=""
               >
@@ -79,15 +81,18 @@ export default{
   },
   methods:{
     ...mapActions([
-      'add_in_basket'
+      'ADD_IN_BASKET',
+      'TOGGLE_FAVORITE'
     ]),
-    addInBasket(product_data){
-      this.add_in_basket(product_data)
-    },
+    toggleFavorite(){
+      if(Object.keys(this.product_data).length){
+        this.TOGGLE_FAVORITE(this.product_data)
+      }
+    }
   },
   computed: {
     ...mapGetters([
-      'basket'
+      'BASKET'
     ]),
     processor_complectation(){
       if(this.product_data.type === "processor"){
@@ -136,6 +141,11 @@ export default{
 		}
     &__btn{
       font-size: 15px;
+    }
+    & .favorite{
+      &:hover{
+        background-color: rgba(255, 0, 0, 0.849);
+      }
     }
 }
 .button-box{

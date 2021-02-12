@@ -3,16 +3,16 @@
       <transition name="slide-fade">
         <div 
           class="products-box header-box__products-box"
-          v-show="basketVisibility">
-          <h2 class="products-box__text" v-if="basket_length == 0">Корзина пуста</h2>
+          v-show="BASKET_VISIBLITY">
+          <h2 class="products-box__text" v-if="BASKET_LENGTH == 0">Корзина пуста</h2>
           
             <div class="btn-box">
                 <p
                   class="btn-box__text"
-                  v-if="basket_length >=1">Общая сумма: {{(TOTAL_SUM).toLocaleString()}} ₽</p>
+                  v-if="BASKET_LENGTH >=1">Общая сумма: {{(TOTAL_SUM).toLocaleString()}} ₽</p>
                 <router-link
                    :to="{name: 'basket'}"
-                   class="btn-box__btn" v-if="basket_length >=1">
+                   class="btn-box__btn" v-if="BASKET_LENGTH >=1">
                    Перейти к оформлению
                 </router-link>             
                 
@@ -51,18 +51,17 @@ export default{
   },
   methods:{
     ...mapActions([
-      'deleteItemFromBasket'
+      'DELETE_ITEM_FROM_BASKET'
     ]),
     removeItemFromBasket(index){
-      this.deleteItemFromBasket(index)
+      this.DELETE_ITEM_FROM_BASKET(index)
     },
 
   },
   computed: {
     ...mapGetters([
-      'basketVisibility',
-      'basket_length',
-      'basket',
+      'BASKET_VISIBLITY',
+      'BASKET_LENGTH',
       'TOTAL_SUM'
     ])
   }

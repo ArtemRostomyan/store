@@ -1,6 +1,7 @@
 <template>
   <div id="v-favorites-products">
-    <vHeader/>
+    <vHeader
+      :product_data="BASKET"/>
     <h1
       v-if="!FAVORITES.length">Здесь будут находиться избранные товары</h1>
     <h1
@@ -15,7 +16,7 @@
         :key="index"
         :product_data="product"
         @toggleFavorite="toggleFavorite(product)"
-        @addInBasket="addInBasket"
+        @addInBasket="ADD_IN_BASKET(product)"
         @updateSeparateCardProduct="updateSeparateCardProduct(product)"/>
     </transition-group>
   </div>
@@ -37,23 +38,20 @@ export default{
   },
   methods: {
     ...mapActions([
-      'add_in_basket',
+      'ADD_IN_BASKET',
       'TOGGLEFAVORITE'
     ]),
-    addInBasket(product){
-      this.add_in_basket(product)
-    },
     updateSeparateCardProduct(product){
       this.$router.push( {name: 'separate-product', query: {'product': product.id}, params:{product_data: product} })
     },
     toggleFavorite(product){
-      product.favorite = !product.favorite
       this.TOGGLEFAVORITE(product)
     }
   },
   computed: {
     ...mapGetters([
-      'FAVORITES'
+      'FAVORITES',
+      'BASKET'
     ])
   }
 }

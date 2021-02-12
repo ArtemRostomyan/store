@@ -9,7 +9,7 @@
                 v-show="queueView == 1"
                 @updateSeparateCardProduct="updateSeparateCardProduct(card)"
                 @removeItemFromBasket="removeItemFromBasket(index)"
-                v-for="(card, index) in basket"
+                v-for="(card, index) in BASKET"
                 :key="card.id"
                 :cardItem="card"
               />
@@ -43,7 +43,7 @@
         @click="queueNext">Далее</button>
     </div>
     <vohNoComponent
-      v-if="ohNo"/>
+      v-if="OH_NO"/>
   </div>
 </template>
 
@@ -80,11 +80,11 @@ export default{
   },
   methods:{
     ...mapActions([
-      'deleteItemFromBasket',
+      'DELETE_ITEM_FROM_BASKET',
       'toggleBasketVisibility'
     ]),
     removeItemFromBasket(index){
-      this.deleteItemFromBasket(index)
+      this.DELETE_ITEM_FROM_BASKET(index)
     },
     queueNext(){
       if(this.queueView < 4){
@@ -103,8 +103,8 @@ export default{
   },
   computed: {
     ...mapGetters([
-      'basket',
-      'ohNo',
+      'BASKET',
+      'OH_NO',
       'TOTAL_SUM'
     ])
   }

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default{
   name: 'Card-product',
   props: {
@@ -56,7 +56,7 @@ export default{
   },
   methods:{
     ...mapActions([
-      'TOGGLEFAVORITE'
+      'START_FAVORITES'
     ]),
     add_in_basket(){
       this.$emit('addInBasket', this.product_data)
@@ -66,10 +66,30 @@ export default{
     },
     toggleFavorite(){
       this.$emit('toggleFavorite', this.product_data)
+    },
+    getInfoForLocalStorage(){
+      if(localStorage.favorites){
+        JSON.parse(localStorage.favorites).forEach(item =>{
+          if(item.id === this.product_data.id){
+            this.product_data.favorite = true
+            this.START_FAVORITES(this.product_data)
+          }
+        })
+      }
+    },
+    setFavoriteToStart(){
+      this.$set(this.product_data, 'favorite', false)
     }
   },
+  computed: {
+    ...mapGetters([
+      'PRODUCTS',
+      'FAVORITES'
+    ])
+  },
   mounted(){
-      this.$set(this.product_data, 'favorite', false)
+      this.setFavoriteToStart()
+      this.getInfoForLocalStorage()
   }
 }
 </script>

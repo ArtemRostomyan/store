@@ -87,21 +87,21 @@ export default{
   },
   methods:{
     ...mapActions([
-      'ohNotoggle'
+      'OH_NO_TOGGLE'
     ]),
     queueBack(){
       this.$emit('queueBack')
     },
     toggleOhNo(){
       if(!this.disabledBtnLast){
-        this.ohNotoggle()
+        this.OH_NO_TOGGLE()
         this.goToHome = true
       }
     }
   },
   computed: {
     ...mapGetters([
-      'ohNoText'
+      'OH_NO_TEXT'
     ]),
     disabledBtnLast(){
       return  this.$v.address.$invalid ||

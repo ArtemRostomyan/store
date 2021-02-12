@@ -32,7 +32,7 @@
       <div class="button-box">
         <button
           class="btn button-box__button"
-          @click="removeItemFromBasket">{{removeItemText}}</button>
+          @click="removeItemFromBasket">{{REMOVE_ITEM_TEXT}}</button>
       </div>  
     </div>
   </div>
@@ -78,7 +78,7 @@ export default{
   },
   computed: {
     ...mapGetters([
-      'removeItemText'
+      'REMOVE_ITEM_TEXT'
     ])
   },
   mounted(){
@@ -93,10 +93,11 @@ export default{
   background-color: #fff;
   margin: 0px 0px 4px 0px;
   border-radius: 7px;
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+  color: #000;
 }
 .image-box{
   &__image{

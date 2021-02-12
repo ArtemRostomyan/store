@@ -34,7 +34,7 @@
     <div class="button-box">
       <button
         class="btn button-box__button"
-        @click="removeItemFromBasket">{{removeItemText}}</button>
+        @click="removeItemFromBasket">{{REMOVE_ITEM_TEXT}}</button>
     </div> 
   </div>
 </template>
@@ -81,7 +81,7 @@ export default{
   },
   computed: {
     ...mapGetters([
-      'removeItemText'
+      'REMOVE_ITEM_TEXT'
     ])
   }
 }

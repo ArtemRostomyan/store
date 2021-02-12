@@ -1,16 +1,18 @@
 # computer-store
 
-## Project setup
+Товары из гитхаб "сервера" ( имитация ) через аксиос поступают на сайт и выводятся на экран. Мультиселект реализован с помощью библиотеки Vue Multiselect. Хранилище данных - Vuex. Роутинг - Vue Router
+
+## Установить зависимости Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Скомпилировать и вывести на локальный хост <br/> Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Сбилдить Compiles and minifies for production
 ```
 npm run build
 ```

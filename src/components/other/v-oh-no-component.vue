@@ -6,7 +6,7 @@
         @click="removeOhNo">х</button>
       <h2>Внимание!</h2>
       <p>Данный проект не является реальным магазниом</p>
-      <p>Проект собран с помощью npm run build, если хотите посмотреть на реализацию vue компонентов - переходите на мой гитхаб-репозиторий</p>
+      <p>Проект собран с помощью npm run build, если хотите посмотреть на реализацию <span>Vue</span> компонентов - переходите на мой гитхаб-репозиторий</p>
     </div>
   </div>
 </template>
@@ -20,10 +20,10 @@ export default{
   },
   methods:{
     ...mapActions([
-      'ohNotoggle'
+      'OH_NO_TOGGLE'
     ]),
     removeOhNo(){
-      this.ohNotoggle()
+      this.OH_NO_TOGGLE()
     }
   },
   computed: {
@@ -60,6 +60,10 @@ export default{
   }
   p{
     font-weight: 600;
+    span{
+      font-weight: 300;
+      color: rgb(77, 212, 77);
+    }
   }
 }
 @media (max-width:560px) {

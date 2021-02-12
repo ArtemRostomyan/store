@@ -1,7 +1,7 @@
 <template>
   <div id="v-multi-select">
         <multiselect
-          @input="updateValueAction"
+          @input="UPDATE_VALUE_ACTION"
           :options="options" 
           :value="VALUE"
           :multiple="true" 
@@ -50,12 +50,11 @@ export default{
   },
   methods:{
     ...mapActions([
-      'updateValueAction'
+      'UPDATE_VALUE_ACTION'
     ])
   },
   computed: {
     ...mapGetters([
-      'products',
       'VALUE'
     ]),
     ...mapState([

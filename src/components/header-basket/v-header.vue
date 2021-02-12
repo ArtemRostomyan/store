@@ -20,7 +20,7 @@
       
       <div 
         class="image-box header-box__image-box"
-        @click="toggleBasketVisibility"
+        @click="TOGGLE_BASKET_VISIBLITY"
         >
         <img 
           class="image-box__image"
@@ -28,9 +28,9 @@
           alt="">
           <div 
             class="quanity-box image-box__quanity-box"
-            v-if="basket_length != 0">
+            v-if="BASKET_LENGTH != 0">
           <span
-            class="quanity-box__text">{{basket_length}}</span>
+            class="quanity-box__text">{{BASKET_LENGTH}}</span>
         </div>
       </div>
         <vbasket
@@ -63,15 +63,12 @@ export default{
   },
   methods:{
     ...mapActions([
-      'toggleBasketVisibility'
-    ]),
-    assss(){
-      console.log(this.product_data)
-    }
+      'TOGGLE_BASKET_VISIBLITY'
+    ])
   },
   computed: {
     ...mapGetters([
-      'basket_length'
+      'BASKET_LENGTH'
     ])
   }
 }

@@ -1,24 +1,24 @@
 <template>
   <div id="Catalog-product">
     <vHedaerComponent
-      :product_data="basket"/>
+      :product_data="BASKET"/>
     <vPreloaderComponent
-      v-if="preloader"
+      v-if="PRELOADER"
       class="preloader-comp"/>
     <div class="iput-box">
       <vMultiSelect
         class="vMultiSelect"
-        v-if="!preloader"
+        v-if="!PRELOADER"
         />
       <vRangeSortingPrice
         class="vRangeSortingPrice"
-        v-if="!preloader"/>
+        v-if="!PRELOADER"/>
     </div>
     <transition-group 
       name="list" 
       tag="div"
       class="catalog-products"
-      v-if="!preloader">
+      v-if="!PRELOADER">
       <vCardProduct
                 v-for="product in filteredCatalog" 
                 :key="product.id"
@@ -29,7 +29,7 @@
                 ></vCardProduct>
     </transition-group>
     <vOhNoComponent
-      v-if="ohNo"/>
+      v-if="OH_NO"/>
   </div>
 </template>
 
@@ -64,15 +64,16 @@ export default{
   computed:{
     ...mapGetters([
       'PRODUCTS',
-      'preloader',
-      'basket',
-      'ohNo',
-      'newCatalog',
-      'DONTRESULT'
+      'PRELOADER',
+      'BASKET',
+      'OH_NO',
+      'NEW_CATALOG',
+      'DONTRESULT',
+      'FAVORITES'
     ]),
     filteredCatalog(){
-      if(this.newCatalog.length){
-        return this.newCatalog
+      if(this.NEW_CATALOG.length){
+        return this.NEW_CATALOG
       } else{
           return this.PRODUCTS
       }
@@ -80,52 +81,36 @@ export default{
   },
   methods:{
     ...mapActions([
-      'get_products_from_github',
-      'add_in_basket',
-      'togglePreloader',
-      'startProcess',
+      'GET_PRODUCTS_FROM_GITHUB',
+      'ADD_IN_BASKET',
+      'TOGGLE_PRELOADER',
+      'START_PROCESS',
       'INCREMENT_DONT_RESULT',
-      'TOGGLEFAVORITE'
+      'TOGGLE_FAVORITE',
+      'START_FAVORITES'
     ]),
     addInBasket(product){
-      console.log(this.PRODUCTS)
-      this.add_in_basket(product)
+      this.ADD_IN_BASKET(product)
     },
     updateSeparateCardProduct(product){
       this.$router.push( {name: 'separate-product', query: {'product': product.id}, params:{product_data: product} })
     },
     toggleFavorite(product){
-      product.favorite = !product.favorite
-      this.TOGGLEFAVORITE(product)
+      this.TOGGLE_FAVORITE(product)
     },
-    getInfoForLocalStorage(){
-      if(localStorage.favorites){
-        this.PRODUCTS.forEach(itemProduct => {
-          JSON.parse(localStorage.favorites).forEach(item =>{
-            console.log(item)
-            if(item.id === itemProduct.id){
-              itemProduct.favorite = true
-              this.TOGGLEFAVORITE(itemProduct)
-            }
-          })
-        })
-      }
-    }
+
   },
   mounted() {
-    this.get_products_from_github()
+    this.GET_PRODUCTS_FROM_GITHUB()
     .then(
-      this.togglePreloader()
+      this.TOGGLE_PRELOADER()
     )
     .then(
-      this.startProcess()
+      this.START_PROCESS()
     )
     .then(
       this.INCREMENT_DONT_RESULT()
     )
-  },
-  beforeUpdate(){
-    this.getInfoForLocalStorage()
   }
 }
 </script>

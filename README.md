@@ -2,7 +2,7 @@
 
 Товары из гитхаб "сервера" ( имитация ) через аксиос поступают на сайт и выводятся на экран. Мультиселект реализован с помощью библиотеки Vue Multiselect. Хранилище данных - Vuex. Роутинг - Vue Router
 
-## Установить зависимости Project setup
+## Установить зависимости <br/> Project setup
 ```
 npm install
 ```
@@ -12,7 +12,7 @@ npm install
 npm run serve
 ```
 
-### Сбилдить Compiles and minifies for production
+### Сбилдить <br/> Compiles and minifies for production
 ```
 npm run build
 ```

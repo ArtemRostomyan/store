@@ -41,7 +41,7 @@
           <div class="button-box">
             <button
                 class="separate-product__btn btn"
-                @click="ADD_IN_BASKET(product_data)">В корзину</button>
+                @click="addInBasket(product_data)">В корзину</button>
             <img 
               class="separate-product__heart"
               :class="{'favorite' : product_data.favorite}"
@@ -88,6 +88,11 @@ export default{
       if(Object.keys(this.product_data).length){
         this.TOGGLE_FAVORITE(this.product_data)
       }
+    },
+    addInBasket(product_data){
+      if(Object.keys(this.product_data).length){
+        this.ADD_IN_BASKET(product_data)
+      }
     }
   },
   computed: {
@@ -124,17 +129,18 @@ export default{
       border-radius: 20px;
 		}
 		&__heart {
-      box-sizing: content-box;
-      padding: 3px;
+      box-sizing: border-box;
       border-radius: 40%;
+      padding: 3px;
       bottom: 16px;
-      width: 30px;
+      width: 33px;
       cursor: pointer;
       &:hover{
         background-color: rgba(#54a78c, 0.308);
       }
       &:active{
-        width: 25px;
+        width: 33px;
+        padding: 5px;
         bottom: 18px;
         left: 152px;
       }

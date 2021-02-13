@@ -5,15 +5,15 @@
         :title="product_data.description">
         <div class="catalog-products__image-box">
           <img 
-          class="product-card__image"
-
-          :src="product_data.image"
-          alt=""
+            class="product-card__image"
+            @click="updateSeparateCardProduct"
+            :src="product_data.image"
+            alt=""
           >
         </div>
         <div 
           class="catalog-products__info-box"
-
+          @click="updateSeparateCardProduct"
           >
           <p
             class="product-card__name">{{product_data.name}}</p>

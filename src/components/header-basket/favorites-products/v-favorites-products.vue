@@ -39,13 +39,13 @@ export default{
   methods: {
     ...mapActions([
       'ADD_IN_BASKET',
-      'TOGGLEFAVORITE'
+      'TOGGLE_FAVORITE'
     ]),
     updateSeparateCardProduct(product){
       this.$router.push( {name: 'separate-product', query: {'product': product.id}, params:{product_data: product} })
     },
     toggleFavorite(product){
-      this.TOGGLEFAVORITE(product)
+      this.TOGGLE_FAVORITE(product)
     }
   },
   computed: {

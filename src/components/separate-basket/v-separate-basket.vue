@@ -87,7 +87,7 @@ export default{
       this.DELETE_ITEM_FROM_BASKET(index)
     },
     queueNext(){
-      if(this.queueView < 4){
+      if(this.queueView < 4 && this.BASKET.length){
         this.queueView++
       }
     },

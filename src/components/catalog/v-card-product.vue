@@ -132,13 +132,13 @@ export default{
     padding: 3px;
     border-radius: 40%;
     bottom: 16px;
-    width: 30px;
+    width: 23px;
     cursor: pointer;
     &:hover{
       background-color: rgba(#54a78c, 0.308);
     }
     &:active{
-      width: 25px;
+      width: 23px;
       bottom: 18px;
       left: 152px;
     }
